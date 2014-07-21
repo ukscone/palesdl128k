@@ -10,3 +10,6 @@ iffy/non-working & the gui is very primative and a lot of things probably don't 
 
 cp/m & lynxdos seem to be fine.
 
+
+requires libSDL1.2 & libdsk (any ver > 1.1.5) from http://www.seasip.demon.co.uk/Unix/LibDsk/
+

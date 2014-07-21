@@ -1,10 +1,10 @@
-CC = gcc -std=c99
+CC = gcc
 OBJ = io.o pale.o sound.o disk.o video.o rom.o lynx128k.o keys.o taps.o rawtape.o KOGEL/z80.o fonts.o directory.o gui.o
 LINKOBJ = io.o pale.o sound.o disk.o video.o rom.o lynx128k.o keys.o taps.o rawtape.o KOGEL/z80.o fonts.o directory.o gui.o
 LIBS = -ldsk `sdl-config --libs`
 INCS = -I/usr/local/include
 BIN = palesdl128k
-CFLAGS =-fsigned-char -fexpensive-optimizations -O3 $(INCS)
+CFLAGS =-std=c99 -fsigned-char -fexpensive-optimizations -O3 $(INCS)
 RM = rm -f
 
 .PHONY: all all-before all-after clean clean-custom

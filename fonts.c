@@ -322,12 +322,6 @@ void show_help(int waitforinput)
     char name[200];
     char lbl[200];
 
-//      my_show_speed();
-
-//vidmem = VIDEO_PAGE1;
-//Another way of doing it
-//vidmem = vga_mem;
-
     my_print("\f0");
     my_paint(0,32,5,31);
     my_move(0,5);
@@ -337,11 +331,6 @@ void show_help(int waitforinput)
         sprintf(lbl,"%.2f",PALE_REV);
         my_print(lbl);
   
-/*if(SDL_MUSTLOCK(screen) == 0)  
-    my_print("\nMustlock is 0\n");
-	else
-    my_print("\nMustlock is nonzero\n");
-*/
     my_print("\f7\a0\n\n");
     my_print("F1  - Show Help\n");
     my_print("F2  - Show Status\n");
@@ -360,7 +349,8 @@ void show_help(int waitforinput)
     my_print("'-help' for more information\n");
 
     my_print("\f7\a1");
-    my_print("\n\n    \f6Peter Todd 2003 - 2012\n\n");
+    my_print("\n    \f6Peter Todd 2003 - 2012\n");
+    my_print("    \f6Russell Davis 2012 - 2014\n");
     my_print("Kogel (z80) Elliott (Libdsk)\n");
     my_print("\f7\a0\n");
     my_print("\f4____________________________");  
