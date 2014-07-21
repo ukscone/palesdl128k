@@ -8,3 +8,5 @@ lynxdisk3
 lynxdis0k
 none
 current.rom
+*.o
+palesdl128k
