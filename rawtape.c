@@ -538,7 +538,7 @@ void update_tape()
         static long time_diff2;
 
 
-        if (tape_mode>LEV9_TAPES && tape_override!=FORCE_STOP)
+        if (tape_mode>=RAW_TAPES && tape_override!=FORCE_STOP)
         {       
                 //TAPE RECORD
                 if(tape_operation==TAPE_RECORD  || tape_override==FORCE_RECORD)
