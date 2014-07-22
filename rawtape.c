@@ -385,93 +385,84 @@ void raw_clear()
         raw_position=0;
 }
 
-void  tape_clear()
+void tape_clear()
 {
-        raw_clear();
-        update_tape_gui();
-        return;
+   raw_clear();
+   update_tape_gui();
+   return;
 }
 
 unsigned int get_tapecyc()
 {
-        return (tapecyc);
+   return (tapecyc);
 }
 
 void set_tapecyc(unsigned int ii)
 {
-        tapecyc=ii;
+  tapecyc=ii;
 }
 
 int get_tape_icount()
 {
-        return(tapecyc);
+  return(tapecyc);
 }
-
-
 
 int set_tape_spd(int gt)
 {
-        //Note this is the speed threshold dev stuff
-        tape_spd=gt;
-        
-        return(0);
+  //Note this is the speed threshold dev stuff
+  tape_spd=gt;
+  return(0);
 }
-
 
 void set_tape_spd_adjust(int gt)
 {
-        //Note this is the tweakable speed adjustment
-        tape_spd_adjust=gt-50;
-        
-        return;
+  //Note this is the tweakable speed adjustment
+  tape_spd_adjust=gt-50;
+  return;
 }
 
-
-int  set_tape_inverted(int gt)
+int set_tape_inverted(int gt)
 {
-        tape_inverted=gt;
-        
-        return(0);
+   tape_inverted=gt;
+   return(0);
 }
 
-int  get_raw_threshold(int gt)
+int get_raw_threshold(int gt)
 {
-        
-        return(raw_threshold);
+   return(raw_threshold);
 }
+
 void  set_raw_thresh(int gt)
 {
-        raw_threshold=gt;
-        
-        return;
+   raw_threshold=gt;
+   return;
 }
 
 int set_raw_position(unsigned int gt)
 {
-        raw_position=gt;
-        
-        return(0);
+   raw_position=gt;
+   return(0);
 }
-
 
 int set_raw_samprate(unsigned int gt)
 {
-        raw_sample_rate=gt;
-        if ((raw_sample_rate<BASE_SAMPLE_RATE) || (raw_sample_rate>100000))     
-        {       
-                gui_error("Invalid Sample Rate");
-                raw_sample_rate=BASE_SAMPLE_RATE;
-        }
-        return(0);
+   raw_sample_rate=gt;
+   if ((raw_sample_rate<BASE_SAMPLE_RATE) || (raw_sample_rate>100000))     
+   {       
+      gui_error("Invalid Sample Rate");
+      raw_sample_rate=BASE_SAMPLE_RATE;
+   }
+   return(0);
 }
 
 int  get_raw_samprate(int gt)
 {
-        return(raw_sample_rate);
+   return(raw_sample_rate);
 }
+
 int get_raw_samprate_index(int gt)
 {
-        return((raw_sample_rate/BASE_SAMPLE_RATE)-1);
+   return((raw_sample_rate/BASE_SAMPLE_RATE)-1);
 }
 
 
@@ -503,47 +494,37 @@ int set_rawbuflen(unsigned int gt)
 
 int set_raw_buflen(int gt)
 {
-        
-        if(tape_operation!=TAPE_STOPPED || tape_override==FORCE_PLAY ||  tape_override==FORCE_RECORD )
-        {
-                gui_error("STOP the tape before changing Buffer Length");
-                return(0);
-        }
-
-        free(raw_tape);
-
-        set_rawbuflen(gt);
-        
-        return(0);
+   if(tape_operation!=TAPE_STOPPED || tape_override==FORCE_PLAY ||  tape_override==FORCE_RECORD )
+   {
+      gui_error("STOP the tape before changing Buffer Length");
+      return(0);
+   }
+   free(raw_tape);
+   set_rawbuflen(gt);
+   return(0);
 }
 
 int get_tape_monitor(unsigned char tapemon[],unsigned int gt)
 {
-        int f;
-        if(raw_position>gt)
-        {
-                for(f=0;f<gt;f++)
-                {
-                                //this little calc makes it return the last N points
-                                //hence this monitor works on SAVEing proggies too
-                                tapemon[f]=raw_tape[raw_position+f-gt];
-                }
-        }
-        return(1);
+  int f;
+  if(raw_position>gt)
+  {
+    for(f=0;f<gt;f++)
+    {
+       //this little calc makes it return the last N points
+       //hence this monitor works on SAVEing proggies too
+       tapemon[f]=raw_tape[raw_position+f-gt];
+    }
+  }
+  return(1);
 }
 
 
 
 void init_tapestuff()
 {
-
-        set_raw_buflen(BASE_RAW_BUFLEN);
-
-
+  set_raw_buflen(BASE_RAW_BUFLEN);
 }
-
-
-
 
 
 void update_tape()
@@ -612,30 +593,3 @@ void update_tape()
                 update_tape_gui();
         }
 }
-
-
-
-/*
-                //TAPE INPUT
-                if(tape_operation==TAPE_PLAY || tape_override==FORCE_PLAY)
-                {
-                                time_this=z80_get_cycles_elapsed();     //returns noof cycles elaps since last call to z80_emulate
-                                if(time_this<time_last)//z80_emuate intervened so its not a diff
-                                        time_diff=time_this;    //BUT THIS PROBABLY THROWS AWAY CYCLES HERE
-                                else
-                                        time_diff=(time_this-time_last);
-                                time_last=time_this;                            
-
-                                if(time_diff>(tape_spd+tape_spd_adjust))
-                                {       
-                                        if(tape_inverted==1)
-                                                tape_level=(255-raw_tape[raw_position]);        //inverts input signal
-                                        else
-                                                tape_level=raw_tape[raw_position];
-                                        raw_position++;
-                                        if (raw_position>=raw_buflen)
-                                                raw_position=raw_buflen-1;
-                                }
-                }
-                update_tape_gui();
-*/

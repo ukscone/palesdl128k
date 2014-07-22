@@ -164,23 +164,6 @@ int draw_scanline(int scanline)
 			{
 					hor_disp_pix = 512;
 			}
-		/*
-			vrt_disp_6845pixperchar=CRTC_reg[9]+1;  //usually 3+1 = 4
-			vrt_disp_chars=CRTC_reg[6];  //usually 3f, 40 in Pengo
-			vrt_disp_pix=vrt_disp_chars*vrt_disp_6845pixperchar;
-			if(vrt_disp_pix<32)vrt_disp_pix=32;
-			if(vrt_disp_pix>256)vrt_disp_pix=256;
-			
-			if (CRTC_reg[3]>0x37)
-				sync_width=(CRTC_reg[3]-0x37)/4;
-			else
-				sync_width=0;
-			
-			if (CRTC_reg[6]>0x3f)
-				vert_sync_pos=(CRTC_reg[6]-0x3f)/4;
-			else
-				vert_sync_pos=0;
-		*/
 
 //FIXME - debug showing fps
 			vrt_disp_pix= 247;
