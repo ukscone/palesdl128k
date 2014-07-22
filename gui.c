@@ -18,7 +18,7 @@ void update_tape_gui_speed(int speed){};
 
 void gui_error(const char* lbl)
 {
-    printf("\nPete Meditation ERROR:%s\n",lbl);
+  printf("\nPete Meditation ERROR:%s\n",lbl);
 };
 
 void update_gui_mtype(){};

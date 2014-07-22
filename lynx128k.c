@@ -26,7 +26,6 @@ void set_speed(int x)
   emu_cycles_lineblank=(long)(emuspeeds[x]*132)/100; // = 22us LineBlank Period
   emu_cycles_vblank=(long)(emuspeeds[x]*240)/100;  //= 40us Vblank(IRQ LOW) Period
   emu_cycles=(long)(emuspeeds[x]*20400)/100;  // = 3.4ms Vblank period      
-//  emu_cycles= (long)(emuspeeds[x]*100000)/100;
 }
 
 void set_bank_latch(unsigned char value)
@@ -35,34 +34,25 @@ void set_bank_latch(unsigned char value)
 }
 
 void set_vid_latch(UBYTE value){
-  char lbl[100];
 
   video_latch=value;
 
   if (value & 0x10)
-  {
      show_alt_green=1;
-  }
   else
-  {
      show_alt_green=0;
-  }
         
   if (value & 0x20)
-  {
      show_allbanks=0;
-  }
   else
-  {
      show_allbanks=1;
-  }
 
+  //Line Blanking monostable - freezes z80 till next scanline end
   if (value & 0x40 && Line_Blank==0)
-  { //Line Blanking monostable - freezes z80 till next scanline end
+  {
      Line_Blank=1;
      z80_stop_emulating();
   }       
-
 }
 
 
@@ -138,19 +128,17 @@ unsigned char Z80_In(unsigned int fred)
 
 
 void Z80_Out(unsigned int port, unsigned char value)
-
 {
    port = port & 0x00FF;
-        switch (port) {
-                case 0x82:
-                        set_bank_latch(value);
-                        break;
-                case 0x80:
-                        set_vid_latch(value);
-                        break;
-	}                
-
-	lynx_common_outp(port,value); 
+   switch (port) {
+     case 0x82:
+       set_bank_latch(value);
+       break;
+     case 0x80:
+       set_vid_latch(value);
+       break;
+   }                
+   lynx_common_outp(port,value); 
 }
 
 
@@ -178,22 +166,22 @@ int Z80_Interrupt(void)
 
 void update_keyrate()
 {
-                static  unsigned int new_keyval,looper=0;
-                if(bank2[0]!=0) //Check for CPM running, if so dont bother with the keyrate
-                {
-                        if(emu_speed >2 )       //stop keyrepeat for faster emus
-                        {
-                                                new_keyval=0x0c00*(emu_speed-1);
-                                                bank1[0x6233]=new_keyval % 256;
-                                                bank1[0x6234]=new_keyval / 256;
-                        }
-                        else
-                        {
-                                                new_keyval=0x0c00;
-                                                bank1[0x6233]=new_keyval % 256;
-                                                bank1[0x6234]=new_keyval / 256;
-                        }
-                }
+   static unsigned int new_keyval,looper=0;
+   if(bank2[0]!=0) //Check for CPM running, if so dont bother with the keyrate
+   {
+       if(emu_speed >2 )       //stop keyrepeat for faster emus
+       {
+            new_keyval=0x0c00*(emu_speed-1);
+            bank1[0x6233]=new_keyval % 256;
+            bank1[0x6234]=new_keyval / 256;
+       }
+       else
+       {
+            new_keyval=0x0c00;
+            bank1[0x6233]=new_keyval % 256;
+            bank1[0x6234]=new_keyval / 256;
+       }
+   }
 }
 
 extern unsigned char taprom[30];
@@ -271,17 +259,11 @@ void tap_patch_rom()
         //YEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESS
 //      bank0[0x1f8e]=0xc9;     //disables setup of variables area (at moment VTBL is too low and overwrites jumpblocks)
 
-//      bank0[0x1f8f]=0x07;//usual Lynx 48K values
-//      bank0[0x1f90]=0x67;
 
         //why these two bytes were wrong in the rom I dont know ?)
 //      bank0[0x1746]=0x07;  // becomes VTBL at 6210            NOT NEEDED for Russells ROM but here anyway for ROM1281 from Martyn
 //      bank0[0x1747]=0x67;             //6211
 }
-
-
-
-
 
 void tap_unpatch_rom()
 {

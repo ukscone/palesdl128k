@@ -108,15 +108,6 @@ void CheckKeys(void)
         z80ports_in[0x0880] = 0xFF;
         z80ports_in[0x0980] = 0xFF;
 
-//if (key[SDLK_ESCAPE])finish_emu =1;
-/*
-for(f=0;f<256;f++)
-{
-    if(key[f])
-        printf("%d ",f);
-}
-*/
-
 	SDL_PumpEvents();
 	key = SDL_GetKeyState(NULL);
 

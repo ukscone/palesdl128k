@@ -13,14 +13,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-//#include <sys/types.h>
-//#include <sys/stat.h>
-//#include <fcntl.h>
-//#include <io.h>
-//#include <windows.h>
 
 #include "../pale.h"
-
 
 extern unsigned Z80_RDMEM(dword A);
 extern void Z80_WRMEM(dword A,byte V);
@@ -30,9 +24,6 @@ extern void Z80_Out(unsigned int port,unsigned char value);
 
 extern void Z80_Patch (Z80_Regs *Regs);
 extern int Z80_Interrupt(void);
-
-
-
 
 unsigned int num_cycs=0;
 

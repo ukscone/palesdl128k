@@ -10,13 +10,7 @@
 #include "lynx128k.h"
 #include "video.h"
 
-//#define VIDEO_METHOD SDL_SWSURFACE 
-//|SDL_RESIZABLE
-//|SDL_HWPALETTE
 #define VIDEO_METHOD SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_HWPALETTE
-//|SDL_RLEACCEL 
-//|SDL_ASYNCBLIT  - for multiproc systems
-
 
 int StretchEnable=0;    //Enables VIdeo Stretch function
 
@@ -31,8 +25,8 @@ SDL_Color LynxPalette[16] = {{0,0,0,0},{0,0,255,0},{255,0,0,0},{255,0,255,0}, \
 
 void clearcrtc()
 {
-    for(int f=0;f<18;f++)
-        CRTC_reg[f]=0;
+  for(int f=0;f<18;f++)
+    CRTC_reg[f]=0;
 }
 
 void video_fullscreen(int x)
@@ -41,26 +35,17 @@ void video_fullscreen(int x)
         
     if(x == 1)
     {
-        //Do This twice to make sure w2k blacksout the border area
         if(useDoubleSize == 1)
-	{
 	    screen = SDL_SetVideoMode(1024,512, 8,  VIDEO_METHOD | SDL_FULLSCREEN);
-	}
 	else
-	{
 	    screen = SDL_SetVideoMode(512,256, 8,  VIDEO_METHOD | SDL_FULLSCREEN);
-	}
     }
     else
     {
         if(useDoubleSize  == 1)
-	{
             screen = SDL_SetVideoMode(1024,512, 8,  VIDEO_METHOD);
-	}
 	else
-	{
 	    screen = SDL_SetVideoMode(512,256, 8,  VIDEO_METHOD);
-	}
     }
     SDL_DisplayFormat(screen);
     SDL_SetColors(screen, LynxPalette, 0, 8);
@@ -69,13 +54,9 @@ void video_fullscreen(int x)
 void set_screenres()
 {
     if(useDoubleSize  == 1)
-    {
         screen = SDL_SetVideoMode(1024,512, 8,  VIDEO_METHOD);
-    }
     else
-    {
         screen = SDL_SetVideoMode(512,256, 8,  VIDEO_METHOD);
-    }
     if ( screen == NULL )
     {
         gui_error("Couldnt get Video MODE");
@@ -119,25 +100,18 @@ void initialise_display(void)
 
 void end_frame()
 {
-    if(useScanlineUpdates == 0)
+  if(useScanlineUpdates == 0)
+  {
+    if(usePageFlipping == 1)
+      SDL_Flip(screen);
+    else
     {
-	if(usePageFlipping == 1)
-	{
-	    SDL_Flip(screen);
-	}
-	else
-	{
-	    if(useDoubleSize == 1)
-	    {
-	        SDL_UpdateRect(screen, 0,0,1024,512);
-
-	    }
-	    else
-	    {
-	        SDL_UpdateRect(screen, 0,0,512,256);
-	    }
-	}
+      if(useDoubleSize == 1)
+        SDL_UpdateRect(screen, 0,0,1024,512);
+      else
+        SDL_UpdateRect(screen, 0,0,512,256);
     }
+  }
 }
 
 //Returns ZERO if end of screen

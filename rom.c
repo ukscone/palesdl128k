@@ -13,7 +13,7 @@
 
 unsigned char rompath[200];
 
-unsigned char buffer[LYNX_MAXMEM];	//leave room for 64k rom ;)
+unsigned char buffer[LYNX_MAXMEM];	// leave room for 64k rom ;)
 unsigned char lynx_rom[LYNX_MAXMEM];	// lynx ROM copy - updated to allow for many roms
 
 char romset_files[8*8][40];

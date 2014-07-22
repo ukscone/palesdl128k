@@ -19,7 +19,6 @@ extern int tape_override;
 
 #define LYNX_MAX_RAW 64000000
 
-//extern unsigned char raw_tape[LYNX_MAX_RAW];
 extern unsigned char *raw_tape;
 extern unsigned int raw_position;
 extern unsigned int raw_play;
@@ -32,7 +31,7 @@ extern void stop_tape();
 extern void init_tapestuff();
 
 void set_tape_spd_adjust(int gt);
-void  set_raw_thresh(int gt);
+void set_raw_thresh(int gt);
 void tape_clear();
 
 

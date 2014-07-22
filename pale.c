@@ -3,20 +3,14 @@
 // Pete Todd Mid Wales Uk, 2003 - 2012
 // Russell Davis 2012 - 2014
 //
-//
 #include <stdio.h>
-
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
 #include "pale.h"
-
-// Include the KOGEL emulator code
 #include "KOGEL/Z80.h"
 #include "KOGEL/kogelmem.h"
 #include "KOGEL/kogelio.h"
-
 #include <SDL/SDL.h>
  
 // This is a temporary endpoint for calls carried over from the DOSPALE PALEDOS emulators
@@ -31,11 +25,8 @@
 #include "rawtape.h"
 #include "disk.h"
 #include "fonts.h"
-
 #include "lynx128k.h"
 #include "video.h"
-
-
 
 #define FPS_LIMITER_DELAY_START 1
 
@@ -66,7 +57,7 @@ int useFPSlimiter = 0;
 
 int usePageFlipping = 0;
 int useScanlineUpdates = 0;
-int useDoubleSize = 0;
+int useDoubleSize = 1;
 int useShowFPS = 0;
 int nosplash = 0;
 
@@ -89,7 +80,6 @@ int trace=0;
 FILE *tracedump_file;
 char *loadfilename;
 
-
 extern void initmem();
 extern void set_speed(int );
 
@@ -100,12 +90,11 @@ float get_pale_rev()
 
 void bit(unsigned char *vari,unsigned char posit,unsigned char valu)
 {
-        if (valu==0)
-                *vari=(*vari & (255-((unsigned char)1 << posit)));
-        else
-                *vari=(*vari | ((unsigned char)1 << posit));
+  if (valu==0)
+     *vari=(*vari & (255-((unsigned char)1 << posit)));
+  else
+     *vari=(*vari | ((unsigned char)1 << posit));
 }
-
 
 void init_fps()
 {
@@ -143,7 +132,6 @@ void tick_fps()
 
 void initialise_Lynx(void)
 {
-
         printf("In Init Lynx\n");
         memset(&bank0[0x0000], 0xFF, LYNX_MAXMEM);
         memset(&bank1[0x0000], 0xFF, LYNX_MAXMEM);
@@ -158,8 +146,6 @@ void initialise_Lynx(void)
  	       printf("Couldnt load the built Lynx ROM\n");
                 exit(1);
         }
-        //save_memdump();
-        
         printf("Initialising Lynx Memory\n");
 	
 	//Must come after ROMset load so we know what the hardware is
@@ -190,30 +176,18 @@ void initialise_Lynx(void)
 
 void set_machine(int x)
 {
-        mc_type=x;
+  mc_type=x;
 
-        printf("Initialising Lynx - machine type: %u\n",x);
-        initialise_Lynx();
+  printf("Initialising Lynx - machine type: %u\n",x);
+  initialise_Lynx();
         
-        printf("Setting Initial Speed - emu_speed %u\n",emu_speed);
-        set_speed(emu_speed);
+  printf("Setting Initial Speed - emu_speed %u\n",emu_speed);
+  set_speed(emu_speed);
 }
-
-
 
 void scan_arguments(int argc, char *argv[])
 {
        int i;
-
-	/*
-        for (i = 1; i < argc; )
-        {
-          printf("%s", argv[i]);
-          if (++i < argc)
-               putchar(' ');
-        }
-        printf("\n");
-	*/
 
 	for(i = 1;i<argc;i++)
 	{
@@ -305,7 +279,6 @@ void scan_arguments(int argc, char *argv[])
 extern  UBYTE video_latch_last ;
 
 // ------------------------------------------------------------------ 
-//#undef main
 int main(int argc, char *argv[])
 {
         FILE *handle;

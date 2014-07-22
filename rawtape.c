@@ -38,8 +38,6 @@ int tape_spd_adjust=0;
 int tape_override=FORCE_OFF;
 
 
-//unsigned char raw_tape[LYNX_MAX_RAW];
-
 unsigned int raw_buflen;//set by init
 unsigned char *raw_tape;
 
@@ -55,7 +53,7 @@ unsigned int tapewid_last=0;
 unsigned int tot_tape_cycles=0;
 unsigned int raw_sample_rate=BASE_SAMPLE_RATE;
 
-unsigned char raw_threshold=0x70;//70 is good for Colossal ADvent 80 for Zen (tape 3)
+unsigned char raw_threshold=0x70;//70 is good for Colossal Advent 80 for Zen (tape 3)
 
 unsigned char tape_inverted=0;
 
