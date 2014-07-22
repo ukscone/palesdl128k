@@ -1,7 +1,6 @@
 #ifndef __TAPS_H__
 #define __TAPS_H__
 
-
 int load_lynx_tap(const char* fn,const char* fn2,int tape_type);
 void set_t_mode(int ff);
 int save_lynx_tap();
@@ -10,7 +9,6 @@ int save_LSF(char *fn);
 int load_LSF(char *fn);
 extern unsigned int tape_mode;
 void init_tapestuff();
-
 
 #define TAP_TAPES 0
 #define LSF_TAPES 1

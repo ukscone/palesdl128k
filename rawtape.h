@@ -34,7 +34,6 @@ void set_tape_spd_adjust(int gt);
 void set_raw_thresh(int gt);
 void tape_clear();
 
-
 void force_raw_play();
 void force_raw_auto();
 void force_raw_rec();
@@ -45,7 +44,6 @@ int load_raw(char fnam[]);
 int load_wav(char fnam[]);
 int save_raw(char fnam[]);
 int save_wav(char fnam[]);
-
 
 #define TAPE_STOPPED 0
 #define TAPE_PLAY 1

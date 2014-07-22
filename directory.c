@@ -10,7 +10,7 @@ void get_directory(char *pathext,char *listing,unsigned int highlight,char *name
     DIR *dirp;
     struct dirent *direntp;
    
-    char lbl[200],lbl2[200];
+    char buffer1[200],buffer2[200];
     char list_dir[256];
     int noof_entries_horiz = 0;
     unsigned int noof_entries = 0;
@@ -30,32 +30,30 @@ void get_directory(char *pathext,char *listing,unsigned int highlight,char *name
                 break;
             if(noof_entries == highlight)
             {
-                sprintf(lbl,"\a1\f7");
-                sprintf(lbl2,"%s",direntp->d_name);
-                strcat(lbl,lbl2);
-                sprintf(lbl2,"\a0\f2   ");
-                strcat(lbl,lbl2);
+                sprintf(buffer1,"\a1\f7");
+                sprintf(buffer2,"%s",direntp->d_name);
+                strcat(buffer1,buffer2);
+                sprintf(buffer2,"\a0\f2   ");
+                strcat(buffer1,buffer2);
                 strcpy(name,direntp->d_name);
             }
             else
-                sprintf(lbl,"%s   ",direntp->d_name);
+                sprintf(buffer1,"%s   ",direntp->d_name);
             
             noof_entries_horiz++;
             if(noof_entries_horiz > 1)
             {
                 strcat(listing,"\n");    
                 noof_entries_horiz = 0;
-                //noof_entries_vert++;
-                //if(noof_entries_vert > 15)break;
             }
             noof_entries ++;
-            strcat(listing,lbl);    
+            strcat(listing,buffer1);    
         }
         closedir(dirp);
      }
-    sprintf(lbl,"\n\n\a1\f4Filename: ");
-    strcat(lbl,name);
-    strcat(listing,lbl);    
+    sprintf(buffer1,"\n\n\a1\f4Filename: ");
+    strcat(buffer1,name);
+    strcat(listing,buffer1);    
     strcat(listing,"\0");
     sprintf(list_dir,"%s/%s",pathext,name);
     strcpy(name,list_dir);

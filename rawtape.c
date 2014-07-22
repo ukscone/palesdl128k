@@ -12,31 +12,17 @@
 #include "rawtape.h"
 #include "gui.h"
 
-
-
 #define  BASE_SAMPLE_RATE 22050
 
-//#define  TAPE_CYCS_PLAY_4896 36
-#define  TAPE_CYCS_RECORD_4896 128
-//#define  TAPE_CYCS_PLAY_4896 36
-//#define  TAPE_CYCS_PLAY_4896 10
-#define  TAPE_CYCS_PLAY_4896 20
-
-
-//#define  TAPE_CYCS_RECORD_128 40
-//#define  TAPE_CYCS_PLAY_128 200
 #define  TAPE_CYCS_RECORD_128 158
 #define  TAPE_CYCS_PLAY_128 114
-//#define  TAPE_CYCS_PLAY_128 130
-
 
 #define         BASE_RAW_BUFLEN 1  // 8Mb
 
-unsigned int tape_spd=TAPE_CYCS_PLAY_4896;
+unsigned int tape_spd=TAPE_CYCS_PLAY_128;
 int tape_spd_adjust=0;
 
 int tape_override=FORCE_OFF;
-
 
 unsigned int raw_buflen;//set by init
 unsigned char *raw_tape;
@@ -318,13 +304,10 @@ void stop_tape()
 
 void start_tape_play()
 {
-        tape_operation=TAPE_PLAY;
-        if(hw_type==LYNX_HARDWARE_48 || hw_type==LYNX_HARDWARE_96)
-                tape_spd=TAPE_CYCS_PLAY_4896/(raw_sample_rate/BASE_SAMPLE_RATE);
-        else
-                tape_spd=TAPE_CYCS_PLAY_128/(raw_sample_rate/BASE_SAMPLE_RATE);
-        raw_motor=1;
-        update_tape_gui();
+   tape_operation=TAPE_PLAY;
+   tape_spd=TAPE_CYCS_PLAY_128/(raw_sample_rate/BASE_SAMPLE_RATE);
+   raw_motor=1;
+   update_tape_gui();
 }
 
 void start_tape_record()
@@ -332,10 +315,7 @@ void start_tape_record()
 char lbl[200];
 
         tape_operation=TAPE_RECORD;
-        if(hw_type==LYNX_HARDWARE_48 || hw_type==LYNX_HARDWARE_96)
-                tape_spd=TAPE_CYCS_RECORD_4896/(raw_sample_rate/BASE_SAMPLE_RATE);
-        else
-                tape_spd=TAPE_CYCS_RECORD_128/(raw_sample_rate/BASE_SAMPLE_RATE);
+        tape_spd=TAPE_CYCS_RECORD_128/(raw_sample_rate/BASE_SAMPLE_RATE);
 //sprintf(lbl,"tape_spd is %u rawsamprate is %u",tape_spd,raw_sample_rate);
 //MessageBox(NULL,lbl,"PALE ",MB_YESNOCANCEL | MB_DEFBUTTON1);
         raw_motor=1;
@@ -345,10 +325,7 @@ char lbl[200];
 void force_raw_play()
 {
         tape_override=FORCE_PLAY;//force start
-        if(hw_type==LYNX_HARDWARE_48 || hw_type==LYNX_HARDWARE_96)
-                tape_spd=TAPE_CYCS_PLAY_4896/(raw_sample_rate/BASE_SAMPLE_RATE);
-        else
-                tape_spd=TAPE_CYCS_PLAY_128/(raw_sample_rate/BASE_SAMPLE_RATE);
+        tape_spd=TAPE_CYCS_PLAY_128/(raw_sample_rate/BASE_SAMPLE_RATE);
         update_tape_gui();
 }
 
@@ -360,11 +337,7 @@ void force_raw_auto()
 
 void  force_raw_rec()
 {
-
-        if(hw_type==LYNX_HARDWARE_48 || hw_type==LYNX_HARDWARE_96)
-                tape_spd=TAPE_CYCS_RECORD_4896/(raw_sample_rate/BASE_SAMPLE_RATE);
-        else
-                tape_spd=TAPE_CYCS_RECORD_128/(raw_sample_rate/BASE_SAMPLE_RATE);
+        tape_spd=TAPE_CYCS_RECORD_128/(raw_sample_rate/BASE_SAMPLE_RATE);
         tape_override=FORCE_RECORD;
         tape_operation=TAPE_RECORD;
         update_tape_gui();
@@ -602,12 +575,7 @@ void update_tape()
                                 //Get the no of cycles that have passed
                                 for(i=0;i<2;i++)                                            // OVERRSTUFF THE SAMPLES
                                 {
-                                        if(hw_type==LYNX_HARDWARE_48 || hw_type==LYNX_HARDWARE_96)
-                                        {
-                                                //4896 uses software to synthesise a sin(ish) waveform
-                                                raw_tape[raw_position]=128+((signed int)(sound_port-32)*4);
-                                        }
-                                        else if (hw_type==LYNX_HARDWARE_128 || LYNX_HARDWARE_192 || hw_type==LYNX_HARDWARE_256)
+ if (hw_type==LYNX_HARDWARE_128 || LYNX_HARDWARE_192 || hw_type==LYNX_HARDWARE_256)
                                         {
                                                 //128 uses values 19h and 27h 31d & 37d output to port 84 as straight two levels
                                                 raw_tape[raw_position]=128+((signed int)(sound_port-32)*8);

@@ -135,8 +135,8 @@ void initialise_Lynx(void)
         printf("In Init Lynx\n");
         memset(&bank0[0x0000], 0xFF, LYNX_MAXMEM);
         memset(&bank1[0x0000], 0xFF, LYNX_MAXMEM);
-        memset(&bank2[0x0000], 0x00, LYNX_MAXMEM);	// zeroed to avoid screen flash on boot
-        memset(&bank3[0x0000], 0x00, LYNX_MAXMEM);
+        memset(&bank2[0x0000], 0xFF, LYNX_MAXMEM);	// zeroed to avoid screen flash on boot
+        memset(&bank3[0x0000], 0xFF, LYNX_MAXMEM);
         memset(&bank4[0x0000], 0xFF, LYNX_MAXMEM);
         clearports();
         load_romset(mc_type);
