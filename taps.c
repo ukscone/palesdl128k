@@ -328,7 +328,7 @@ int load_LSF(char *fn)
         unsigned char Chr,c,vid;
        int len, eof,f;
         char lbl[100];
-
+printf("lsf: fn=%s\n",fn);
    handle2 = fopen((const char *)fn,"rb");
     if( handle2 != NULL )
         {

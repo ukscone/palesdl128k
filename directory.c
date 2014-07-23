@@ -15,7 +15,7 @@ void get_directory(char *pathext,char *listing,unsigned int highlight,char *name
     int noof_entries_horiz = 0;
     unsigned int noof_entries = 0;
  
-    sprintf(list_dir,"./%s",pathext);
+    sprintf(list_dir,"%s",pathext);
 
     sprintf(listing,"Directory:%s\n",list_dir);
 
