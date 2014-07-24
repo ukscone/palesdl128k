@@ -332,9 +332,6 @@ int main(int argc, char *argv[])
 	if(loadfilename!=NULL)
 	{ 
 		set_t_mode(LSF_TAPES);
-		sprintf(lbl,"snaps/");
-   	    	strcat(lbl,loadfilename);
-		strcpy(loadfilename,lbl);
 		if(load_LSF(loadfilename))
 			printf("LSF loadfilename - loaded\n");
 		else
